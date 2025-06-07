@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue'
+import RadioButtons from './components/radio-buttons.vue';
 
 const form = reactive({
   name: '',
@@ -8,7 +9,18 @@ const form = reactive({
   startDate: '',
   limitOfIndemnity: '',
   excess: ''
-})
+});
+
+const excessOptions = [
+  { value: '250', name: 'excess' },
+  { value: '500', name: 'excess' },
+  { value: '1000', name: 'excess' }
+];
+
+const insureItemsOptions = [
+  { value: 'Yes', name: 'insureItems' },
+  { value: 'No', name: 'insureItems' }
+];
 
 const today = new Date();
 const minDate = today.toISOString().split('T')[0];
@@ -16,6 +28,17 @@ const minDate = today.toISOString().split('T')[0];
 const futureDate = new Date();
 futureDate.setDate(today.getDate() + 15);
 const maxDate = futureDate.toISOString().split('T')[0];
+
+const updateExcess = (value) => {
+  form.excess = value;
+}
+
+const updateInsureItems = (value) => {
+  form.insureItems = value === 'Yes' ? true : false;
+  if (!form.insureItems) {
+    form.items = [''];
+  }
+}
 
 const completePolicy = () => {
   console.log(form);
@@ -34,27 +57,8 @@ const completePolicy = () => {
 
       <div>
         <h2>Items</h2>
-      <fieldset>
-        <legend>Do you want to insure items?</legend>
-        <label>
-          <input
-            type="radio"
-            name="insureItems"
-            :checked="form.insureItems === true"
-            @change="form.insureItems = true"
-          />
-          Yes
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="insureItems"
-            :checked="form.insureItems === false"
-            @change="form.insureItems = false"
-          />
-          No
-        </label>
-      </fieldset>
+
+      <RadioButtons :radioOptions="insureItemsOptions" legendText="Do you want to insure items?" @radio-updated="updateInsureItems" :checked="form.insureItems === true ? 'Yes' : 'No'" />
 
       <div v-if="form.insureItems">
         <fieldset>
@@ -109,21 +113,7 @@ const completePolicy = () => {
         </select>
       </div>
 
-      <fieldset>
-        <legend>Excess</legend>
-        <label>
-          <input type="radio" v-model="form.excess" value="250" required />
-          £250
-        </label>
-        <label>
-          <input type="radio" v-model="form.excess" value="500" />
-          £500
-        </label>
-        <label>
-          <input type="radio" v-model="form.excess" value="1000" />
-          £1000
-        </label>
-      </fieldset>
+      <RadioButtons :radioOptions="excessOptions" legendText="Excess" @radio-updated="updateExcess" :checked="form.excess" />
 
       <button type="submit">Submit</button>
     </form>
