@@ -1,6 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import RadioButtons from './components/radio-buttons.vue';
+import StartDateSelector from './components/start-date-selector.vue';
+import InsuredItems from './components/insured-items.vue';
+import LimitSelect from './components/limit-select.vue';
 
 const form = reactive({
   name: '',
@@ -22,16 +25,11 @@ const insureItemsOptions = [
   { value: 'No', name: 'insureItems' }
 ];
 
-const today = new Date();
-const minDate = today.toISOString().split('T')[0];
-
-const futureDate = new Date();
-futureDate.setDate(today.getDate() + 15);
-const maxDate = futureDate.toISOString().split('T')[0];
-
-const updateExcess = (value) => {
-  form.excess = value;
-}
+const limitOptions = [
+    { value: '1000000', label: '£1,000,000' },
+    { value: '2000000', label: '£2,000,000' },
+    { value: '5000000', label: '£5,000,000' }
+  ];
 
 const updateInsureItems = (value) => {
   form.insureItems = value === 'Yes' ? true : false;
@@ -60,60 +58,23 @@ const completePolicy = () => {
 
       <RadioButtons :radioOptions="insureItemsOptions" legendText="Do you want to insure items?" @radio-updated="updateInsureItems" :checked="form.insureItems === true ? 'Yes' : 'No'" />
 
-      <div v-if="form.insureItems">
-        <fieldset>
-          <legend>Items to Insure</legend>
-          <div
-            v-for="(item, index) in form.items"
-            :key="index"
-            :aria-label="`Item ${index + 1}`"
-          >
-            <label :for="`item-${index}`">Item {{ index + 1 }}</label>
-            <input
-              :id="`item-${index}`"
-              v-model="form.items[index]"
-              :placeholder="`Item ${index + 1}`"
-            />
-            <button
-              v-if="form.items.length > 1"
-              @click.prevent="form.items.splice(index, 1)"
-              type="button"
-              aria-label="Remove item"
-            >
-              Remove
-            </button>
-          </div>
-          <button @click.prevent="form.items.push('')" type="button">
-            Add another
-          </button>
-        </fieldset>
-      </div>
+        <InsuredItems v-model:items="form.items" v-if="form.insureItems" />
       </div>
 
       <div>
         <h2>Policy</h2>
-        <label for="startDate">Start Date</label>
-        <input
-          type="date"
-          id="startDate"
-          v-model="form.startDate"
-          :min="minDate"
-          :max="maxDate"
-          required
+        <StartDateSelector
+          @date-updated="form.startDate = $event"
         />
       </div>
 
-      <div>
-        <label for="limitOfIndemnity">Limit of Indemnity</label>
-        <select id="limitOfIndemnity" v-model="form.limitOfIndemnity" required>
-          <option disabled value="">Please select</option>
-          <option value="1000000">£1,000,000</option>
-          <option value="2000000">£2,000,000</option>
-          <option value="5000000">£5,000,000</option>
-        </select>
-      </div>
+      <LimitSelect
+  :selected="form.limitOfIndemnity"
+  :options="limitOptions"
+  @limit-updated="form.limitOfIndemnity = $event"
+/>
 
-      <RadioButtons :radioOptions="excessOptions" legendText="Excess" @radio-updated="updateExcess" :checked="form.excess" />
+      <RadioButtons :radioOptions="excessOptions" legendText="Excess" @radio-updated="form.excess = $event" :checked="form.excess" />
 
       <button type="submit">Submit</button>
     </form>
