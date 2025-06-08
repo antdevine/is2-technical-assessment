@@ -72,7 +72,7 @@ const completePolicy = () => {
     >
       <div>
         <h2 class="text-xl font-semibold border-b-2 mb-4">Customer</h2>
-        <label for="name" class="block text-md font-semibold mb-1">Name</label>
+        <label for="name" class="block text-md font-semibold mb-1">Name <span class="text-red-500">*</span></label>
         <input
           id="name"
           v-model="form.name"
@@ -117,16 +117,19 @@ const completePolicy = () => {
       <button
         type="submit"
         :disabled="!userCanSubmit"
-        class="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-xl text-lg font-semibold hover:brightness-110 transition disabled:opacity-50 cursor-pointer"
+        class="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-xl text-lg font-semibold hover:brightness-110 transition disabled:opacity-50"
+        :class="userCanSubmit ? 'cursor-pointer' : 'cursor-not-allowed'"
+        :aria-disabled="!userCanSubmit"
+        :aria-label="userCanSubmit ? 'Submit policy' : 'Please fill in all required fields to submit'"
       >
         Submit
       </button>
     </form>
     <div v-else>
       <h2
-        class="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-orange-500 text-transparent bg-clip-text"
+        class="text-3xl font-semibold text-center text-gray-800"
       >
-        Thank you for your submission!
+        Thank you for submitting your policy
       </h2>
     </div>
   </main>

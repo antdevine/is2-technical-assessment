@@ -30,7 +30,7 @@ const addItem = () => {
   <fieldset>
     <div class="mt-4" v-for="(item, index) in items" :key="index">
       <label :for="`item-${index}`" class="block text-md font-semibold mb-2"
-        >Item {{ index + 1 }}</label
+        >Item {{ index + 1 }} <span class="text-red-500">*</span></label
       >
       <div class="flex items-center gap-2">
         <input
@@ -49,7 +49,7 @@ const addItem = () => {
           @click.prevent="removeItem(index)"
           aria-label="Remove item"
         >
-          <Trash2 class="w-5 h-5 text-red-500" />
+          <Trash2 class="w-5 h-5 text-red-500 cursor-pointer" />
         </button>
       </div>
     </div>

@@ -25,7 +25,7 @@ const radioSelected = (event: Event) => {
 
 <template>
   <fieldset class="flex gap-4 flex-wrap">
-    <legend class="block text-md font-semibold mb-2">{{ legendText }}</legend>
+    <legend class="block text-md font-semibold mb-2">{{ legendText }} <span class="text-red-500">*</span></legend>
     <label
       v-for="(option, index) in radioOptions"
       :key="index"

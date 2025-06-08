@@ -15,7 +15,7 @@ const limitSelected = (event: Event) => {
 <template>
   <div>
     <label for="limitSelect" class="block text-md font-semibold mb-1"
-      >Limit of Indemnity</label
+      >Limit of Indemnity <span class="text-red-500">*</span></label
     >
     <select
       id="limitSelect"

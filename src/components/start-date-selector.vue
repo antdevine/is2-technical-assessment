@@ -17,7 +17,7 @@ const dateSelected = (event: Event) => {
 
 <template>
   <label for="startDate" class="block text-md font-semibold mb-1"
-    >Start Date</label
+    >Start Date <span class="text-red-500">*</span></label
   >
   <input
     type="date"
