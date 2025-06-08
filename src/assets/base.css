@@ -50,13 +50,14 @@
   }
 }
 
-*,
-*::before,
-*::after {
+html {
   box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
 }
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
 
 body {
   min-height: 100vh;
