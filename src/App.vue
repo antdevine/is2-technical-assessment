@@ -16,9 +16,9 @@ const form = reactive({
 });
 
 const excessOptions = [
-  { value: "250", name: "excess" },
-  { value: "500", name: "excess" },
-  { value: "1000", name: "excess" },
+  { value: "£250", name: "excess" },
+  { value: "£500", name: "excess" },
+  { value: "£1000", name: "excess" },
 ];
 
 const insureItemsOptions = [
@@ -27,9 +27,9 @@ const insureItemsOptions = [
 ];
 
 const limitOptions = [
-  { value: "1000000", label: "£1,000,000" },
-  { value: "2000000", label: "£2,000,000" },
-  { value: "5000000", label: "£5,000,000" },
+  { value: "£1,000,000" },
+  { value: "£2,000,000" },
+  { value: "£5,000,000" },
 ];
 
 const updateInsureItems = (value: string) => {

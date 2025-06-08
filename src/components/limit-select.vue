@@ -2,7 +2,7 @@
 import { defineProps, defineEmits } from "vue";
 const props = defineProps<{
   selected: string;
-  options: { value: string; label: string }[];
+  options: { value: string; }[];
 }>();
 
 const emit = defineEmits(["limitUpdated"]);
@@ -26,7 +26,7 @@ const limitSelected = (event: Event) => {
     >
       <option disabled value="">Please select</option>
       <option v-for="opt in options" :key="opt.value" :value="opt.value">
-        {{ opt.label }}
+        {{ opt.value }}
       </option>
     </select>
   </div>
