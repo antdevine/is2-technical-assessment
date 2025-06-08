@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { defineProps, defineEmits } from "vue";
 import { Trash2 } from "lucide-vue-next";
+import BaseButton from "./base-button.vue";
+
 const props = defineProps<{
   items: string[];
 }>();
@@ -43,23 +45,25 @@ const addItem = () => {
           aria-label="Item description"
           class="w-full rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
-        <button
+        <BaseButton
+          @click.prevent="removeItem(index)"
           v-if="items.length > 1"
           type="button"
-          @click.prevent="removeItem(index)"
           aria-label="Remove item"
+          classes=""
         >
           <Trash2 class="w-5 h-5 text-red-500 cursor-pointer" />
-        </button>
+        </BaseButton>
       </div>
     </div>
-    <button
-      type="button"
-      v-if="items[items.length - 1].length > 0"
+
+    <BaseButton
       @click.prevent="addItem"
-      class="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-xl text-lg font-semibold hover:brightness-110 transition disabled:opacity-50 cursor-pointer"
+      v-if="items[items.length - 1].length > 0"
+      type="button"
+      aria-label="Add item"
     >
       Add another
-    </button>
+    </BaseButton>
   </fieldset>
 </template>

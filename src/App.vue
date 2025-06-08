@@ -4,6 +4,7 @@ import RadioButtons from "./components/radio-buttons.vue";
 import StartDateSelector from "./components/start-date-selector.vue";
 import InsuredItems from "./components/insured-items.vue";
 import LimitSelect from "./components/limit-select.vue";
+import BaseButton from "./components/base-button.vue";
 
 const form = reactive({
   name: "" as string,
@@ -72,7 +73,9 @@ const completePolicy = () => {
     >
       <div>
         <h2 class="text-xl font-semibold border-b-2 mb-4">Customer</h2>
-        <label for="name" class="block text-md font-semibold mb-1">Name <span class="text-red-500">*</span></label>
+        <label for="name" class="block text-md font-semibold mb-1"
+          >Name <span class="text-red-500">*</span></label
+        >
         <input
           id="name"
           v-model="form.name"
@@ -114,21 +117,20 @@ const completePolicy = () => {
         :checked="form.excess"
       />
 
-      <button
+      <BaseButton
         type="submit"
         :disabled="!userCanSubmit"
-        class="w-full py-3 mt-4 bg-gradient-to-r from-purple-600 to-orange-500 text-white rounded-xl text-lg font-semibold hover:brightness-110 transition disabled:opacity-50"
-        :class="userCanSubmit ? 'cursor-pointer' : 'cursor-not-allowed'"
-        :aria-disabled="!userCanSubmit"
-        :aria-label="userCanSubmit ? 'Submit policy' : 'Please fill in all required fields to submit'"
+        :aria-label="
+          userCanSubmit
+            ? 'Submit policy'
+            : 'Please fill in all required fields to submit'
+        "
       >
         Submit
-      </button>
+      </BaseButton>
     </form>
     <div v-else>
-      <h2
-        class="text-3xl font-semibold text-center text-gray-800"
-      >
+      <h2 class="text-3xl font-semibold text-center text-gray-800">
         Thank you for submitting your policy
       </h2>
     </div>
