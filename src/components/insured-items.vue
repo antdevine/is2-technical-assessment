@@ -38,6 +38,9 @@ const addItem = () => {
         :placeholder="`Item ${index + 1}`"
         :value="item"
         @input="updateItem(index, ($event.target as HTMLInputElement).value)"
+        required
+        type="text"
+        aria-label="Item description"
       />
       <button
         v-if="items.length > 1"

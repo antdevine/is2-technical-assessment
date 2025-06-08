@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, computed, ref } from 'vue'
 import RadioButtons from './components/radio-buttons.vue';
 import StartDateSelector from './components/start-date-selector.vue';
 import InsuredItems from './components/insured-items.vue';
@@ -38,19 +38,26 @@ const updateInsureItems = (value: string) => {
   }
 }
 
+const userCanSubmit = computed((): boolean => {
+  return !!(form.name && form.startDate && form.limitOfIndemnity && form.excess && (form.insureItems ? form.items.every(item => item.trim() !== '') : true));
+});
+
+const userSubmitted = ref(false);
+
 const completePolicy = () => {
   console.log(form);
+  userSubmitted.value = true;
 }
 </script>
 
 <template>
   <main>
     <h1>Insurance Policy</h1>
-    <form @submit.prevent="completePolicy()">
+    <form @submit.prevent="completePolicy()" v-if="!userSubmitted">
       <div>
         <h2>Customer</h2>
         <label for="name">Name</label>
-        <input id="name" v-model="form.name" placeholder="Enter name" required />
+        <input id="name" v-model="form.name" placeholder="Enter name" required type="text" />
       </div>
 
       <div>
@@ -76,7 +83,10 @@ const completePolicy = () => {
 
       <RadioButtons :radioOptions="excessOptions" legendText="Excess" @radio-updated="form.excess = $event" :checked="form.excess" />
 
-      <button type="submit">Submit</button>
+      <button type="submit" :disabled="!userCanSubmit">Submit</button>
     </form>
+    <div v-else>
+      <h2>Thank you for your submission!</h2>
+      </div>
   </main>
 </template>
