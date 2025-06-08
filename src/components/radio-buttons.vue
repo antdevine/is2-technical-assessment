@@ -1,22 +1,22 @@
-<script setup>
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
 const emit = defineEmits(['radioUpdated']);
-const props = defineProps({
-    radioOptions: {
-        type: Array,
-        default: () => [{value: 'Yes', name: 'option'}, 'No', 'option']
-    },
-    legendText: {
-        type: String,
-        default: 'Radio Question'
-    },
-    checked: {
-        type: String,
-        default: ''
-    }
+const props = withDefaults(defineProps<{
+    radioOptions?: { value: string, name?: string }[],
+    legendText?: string,
+    checked: string
+}>(), {
+    radioOptions: () => [
+    { value: 'Yes', name: 'option' },
+    { value: 'No' },
+    { value: 'option' }
+  ],
+    legendText: 'Radio Question',
 });
 
-const radioSelected = (event) => {
-    emit('radioUpdated', event.target.value);
+const radioSelected = (event: Event) => {
+    const target = event.target as HTMLInputElement;
+    emit('radioUpdated', target.value);
 };
 </script>
 

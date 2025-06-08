@@ -1,14 +1,14 @@
-<script setup>
-const props = defineProps({
-    selected: String,
-  options: {
-    type: Array,
-    default: () => []
-  }
-});
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+const props = defineProps<{
+    selected: string,
+  options: { value: string, label: string }[];
+}>();
+
 const emit = defineEmits(['limitUpdated']);
-const limitSelected = (event) => {
-  emit('limitUpdated', event.target.value);
+const limitSelected = (event: Event) => {
+  const target = event.target as HTMLSelectElement;
+  emit('limitUpdated', target.value);
 };
 </script>
 

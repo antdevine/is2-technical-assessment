@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue'
 import RadioButtons from './components/radio-buttons.vue';
 import StartDateSelector from './components/start-date-selector.vue';
@@ -6,12 +6,12 @@ import InsuredItems from './components/insured-items.vue';
 import LimitSelect from './components/limit-select.vue';
 
 const form = reactive({
-  name: '',
-  items: [''],
-  insureItems: true,
-  startDate: '',
-  limitOfIndemnity: '',
-  excess: ''
+  name: '' as string,
+  items: [''] as string[],
+  insureItems: true as boolean,
+  startDate: '' as string,
+  limitOfIndemnity: '' as string,
+  excess: '' as string,
 });
 
 const excessOptions = [
@@ -31,7 +31,7 @@ const limitOptions = [
     { value: '5000000', label: '£5,000,000' }
   ];
 
-const updateInsureItems = (value) => {
+const updateInsureItems = (value: string) => {
   form.insureItems = value === 'Yes' ? true : false;
   if (!form.insureItems) {
     form.items = [''];

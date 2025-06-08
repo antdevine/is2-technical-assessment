@@ -1,20 +1,20 @@
-<script setup>
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true
-  }
-});
+<script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+const props = defineProps<{
+  items: string[];
+}>();
 
-const emit = defineEmits(['update:items']);
+const emit = defineEmits<{
+  (event: 'update:items', value: string[]): void;
+}>();
 
-const updateItem = (index, value) => {
+const updateItem = (index: number, value: string) => {
   const updated = [...props.items];
   updated[index] = value;
   emit('update:items', updated);
 };
 
-const removeItem = (index) => {
+const removeItem = (index: number) => {
   const updated = [...props.items];
   updated.splice(index, 1);
   emit('update:items', updated);
@@ -37,7 +37,7 @@ const addItem = () => {
         :id="`item-${index}`"
         :placeholder="`Item ${index + 1}`"
         :value="item"
-        @input="updateItem(index, $event.target.value)"
+        @input="updateItem(index, ($event.target as HTMLInputElement).value)"
       />
       <button
         v-if="items.length > 1"
@@ -48,6 +48,6 @@ const addItem = () => {
         Remove
       </button>
     </div>
-    <button type="button" @click.prevent="addItem">Add another</button>
+    <button type="button" v-if="items[items.length - 1].length > 0" @click.prevent="addItem">Add another</button>
   </fieldset>
 </template>

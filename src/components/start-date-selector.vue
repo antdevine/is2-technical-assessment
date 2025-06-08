@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import { defineEmits } from 'vue';
 const emit = defineEmits(['dateUpdated']);
 
 const today = new Date();
@@ -8,8 +9,9 @@ const futureDate = new Date();
 futureDate.setDate(today.getDate() + 15);
 const maxDate = futureDate.toISOString().split('T')[0];
 
-const dateSelected = (event) => {
-    emit('dateUpdated', event.target.value);
+const dateSelected = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+    emit('dateUpdated', target.value);
 };
 </script>
 
